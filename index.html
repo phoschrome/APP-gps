@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f7f6">
-  <title>Centro de Monitoreo GPS | GeoTracker</title>
+  <title>Mi Ubicación | Rastreador GPS en Tiempo Real</title>
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Firebase v10 Compat SDK (No requiere backend ni bundler) -->
+  <!-- Firebase v10 Compat SDK (Cliente sin backend) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 </head>
@@ -15,39 +15,18 @@
   <main class="app">
     <!-- BARRA SUPERIOR -->
     <header class="topbar">
-      <div class="topbar-header">
-        <a class="brand" href="index.html" aria-label="GeoTracker Inicio">
-          <span class="brand-icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" stroke="currentColor" stroke-width="1.8"/>
-              <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.8"/>
-            </svg>
-          </span>
-          GeoTracker
-        </a>
-      </div>
+      <a class="brand" href="index.html" aria-label="GeoTracker Inicio">
+        <span class="brand-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.8"/>
+          </svg>
+        </span>
+        GeoTracker
+      </a>
 
       <div class="topbar-actions">
-        <!-- SELECTOR DE MODO -->
-        <nav class="nav-tabs" aria-label="Modo de aplicación">
-          <a href="monitoreo.html" class="nav-tab active" aria-current="page">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
-              <circle cx="12" cy="12" r="3"/>
-            </svg>
-            Monitoreo
-            <span class="nav-tab-badge">Receptor</span>
-          </a>
-          <a href="rastreador.html" class="nav-tab">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="2"/>
-              <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/>
-            </svg>
-            Rastreador
-          </a>
-        </nav>
-
-        <button class="btn-icon-secondary" id="btn-open-settings" type="button" title="Configurar conexión y claves" aria-label="Configuración">
+        <button class="btn-icon-secondary" id="btn-open-settings" type="button" title="Configurar dispositivo y precisión" aria-label="Configuración">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
             <circle cx="12" cy="12" r="3"/>
@@ -56,20 +35,20 @@
 
         <span class="secure-label">
           <span class="secure-dot" aria-hidden="true"></span>
-          Solo lectura (Sin emitir GPS)
+          Transmisor GPS Activo
         </span>
       </div>
     </header>
 
-    <!-- ENCABEZADO E INTRODUCCIÓN -->
+    <!-- INTRODUCCIÓN -->
     <section class="intro" aria-labelledby="page-title">
-      <p class="eyebrow">CENTRO DE CONTROL &bull; TIEMPO REAL</p>
-      <h1 id="page-title">Monitoreo de Ubicación GPS</h1>
-      <p class="intro-copy">Observa la posición satelital del dispositivo rastreado en vivo sincronizado mediante Firebase Realtime Database.</p>
+      <p class="eyebrow">SEGUIMIENTO GPS &bull; EMISOR SATELITAL</p>
+      <h1 id="page-title">Tu ubicación, en tiempo real.</h1>
+      <p class="intro-copy">Captura tu posición vía satélite y transmítela continuamente a Firebase para su seguimiento remoto.</p>
     </section>
 
-    <!-- TARJETAS DE MÉTRICAS TELEMÉTRICAS -->
-    <section class="metrics-grid" aria-label="Datos en tiempo real">
+    <!-- TARJETAS DE MÉTRICAS -->
+    <section class="metrics-grid" aria-label="Métricas en tiempo real">
       <div class="metric-card">
         <div class="metric-header">
           <span class="metric-label">Latitud</span>
@@ -78,7 +57,7 @@
           </svg>
         </div>
         <span class="metric-value" id="val-latitude">--.------</span>
-        <span class="metric-sub" id="sub-latitude">Esperando coordenadas</span>
+        <span class="metric-sub" id="sub-latitude">Esperando señal satelital</span>
       </div>
 
       <div class="metric-card">
@@ -90,7 +69,7 @@
           </svg>
         </div>
         <span class="metric-value" id="val-longitude">--.------</span>
-        <span class="metric-sub" id="sub-longitude">Esperando coordenadas</span>
+        <span class="metric-sub" id="sub-longitude">Esperando señal satelital</span>
       </div>
 
       <div class="metric-card">
@@ -114,43 +93,34 @@
           </svg>
         </div>
         <span class="metric-value" id="val-accuracy">&plusmn; -- m</span>
-        <span class="metric-sub" id="sub-accuracy">Radio de cobertura</span>
+        <span class="metric-sub" id="sub-accuracy">Margen de error</span>
       </div>
     </section>
 
-    <!-- PANEL DEL MAPA -->
-    <section class="dashboard" aria-label="Visualizador Google Maps">
+    <!-- DASHBOARD Y MAPA -->
+    <section class="dashboard" aria-label="Mapa de ubicación en tiempo real">
       <div class="map-panel">
         <div class="map-heading">
           <div class="map-heading-content">
-            <h2 id="map-title">Posición del Rastreado</h2>
+            <h2 id="map-title">Tu posición satelital</h2>
             <span class="map-tag live" id="tag-device">DISPOSITIVO: dispositivo-01</span>
             <span class="map-tag" id="tag-provider">Google Maps</span>
           </div>
-          <div class="map-heading-actions">
-            <button class="action-button outline" id="btn-center-map" type="button" title="Centrar la cámara en el marcador">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="7"/>
-                <circle cx="12" cy="12" r="3"/>
-                <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
-              </svg>
-              Centrar
-            </button>
-            <button class="action-button outline" id="btn-toggle-autocenter" type="button" aria-pressed="true">
-              <span id="label-autocenter">Auto-centrado: Sí</span>
-            </button>
-            <button class="action-button outline" id="btn-clear-route" type="button" title="Limpiar trayectoria trazada en el mapa">
-              Limpiar ruta
-            </button>
-          </div>
+
+          <button class="tracking-button" id="tracking-button" type="button" aria-pressed="false">
+            <svg id="button-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="m9 6 9 6-9 6V6Z" fill="currentColor"/>
+            </svg>
+            <span id="button-label">Iniciar seguimiento y transmisión</span>
+          </button>
         </div>
 
         <!-- ÁREA DEL MAPA -->
         <div class="map-viewport">
           <div id="map"></div>
 
-          <!-- PLACEHOLDER ESTILO APP-GPS CUANDO NO HAY MAPA CARGADO -->
-          <div class="map-placeholder" id="map-placeholder" role="img" aria-label="Estado del visor Google Maps">
+          <!-- PLACEHOLDER ESTILO APP-GPS -->
+          <div class="map-placeholder" id="map-placeholder" role="img" aria-label="Espacio reservado para mostrar tu posición">
             <div class="map-message" id="map-message">
               <span class="map-pin" aria-hidden="true">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -158,57 +128,73 @@
                   <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.8"/>
                 </svg>
               </span>
-              <strong id="placeholder-title">Esperando clave de Google Maps</strong>
-              <p id="placeholder-copy">Ingresa tu API Key de Google Maps para habilitar la vista cartográfica en tiempo real.</p>
+              <strong id="placeholder-title">Rastreo detenido</strong>
+              <p id="placeholder-copy">Presiona "Iniciar seguimiento y transmisión" para comenzar a transmitir tu ubicación a Firebase.</p>
               <button class="action-button message-btn" id="btn-setup-maps-key" type="button">
-                Configurar Google Maps
+                Configurar Google Maps y GPS
               </button>
             </div>
           </div>
         </div>
 
-        <!-- BARRA INFERIOR DE ESTADO -->
+        <!-- CONTROLES Y ESTADO -->
         <div class="tracking-controls">
           <p class="tracking-status" id="tracking-status" data-state="idle" role="status">
             <span class="status-dot" aria-hidden="true"></span>
-            <span id="status-message">Conectando con Firebase Realtime Database...</span>
+            <span id="status-message">El seguimiento está detenido</span>
           </p>
 
           <div class="status-details">
-            <span class="status-item" id="info-last-ping">
+            <span class="status-item">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"/>
-                <polyline points="12 6 12 12 16 14"/>
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
               </svg>
-              Último reporte: <strong id="val-last-seen" style="margin-left:4px;">Ninguno</strong>
+              Paquetes transmitidos: <strong id="val-packet-count" style="margin-left:4px;">0</strong>
             </span>
           </div>
         </div>
       </div>
     </section>
 
-    <p class="footer-note">El modo monitoreo es 100% pasivo: únicamente recibe telemetría mediante Firebase y no requiere permisos de ubicación en este dispositivo.</p>
+    <p class="footer-note">La ubicación solo se consulta y transmite mientras el seguimiento está activo. Se requiere permiso de ubicación en el navegador y conexión segura HTTPS.</p>
   </main>
 
   <!-- MODAL DE CONFIGURACIÓN -->
   <div class="modal-backdrop" id="settings-modal" role="dialog" aria-modal="true" aria-labelledby="modal-settings-title">
     <div class="modal-card">
       <div class="modal-header">
-        <h2 class="modal-title" id="modal-settings-title">Configuración del Sistema</h2>
+        <h2 class="modal-title" id="modal-settings-title">Configuración del Rastreador</h2>
         <button class="modal-close" id="btn-close-settings" aria-label="Cerrar">&times;</button>
       </div>
 
       <form id="settings-form">
         <div class="form-group">
-          <label class="form-label" for="input-device-id">ID del Dispositivo a Monitorear</label>
+          <label class="form-label" for="input-device-id">ID de este Dispositivo (Canal)</label>
           <input class="form-input" type="text" id="input-device-id" required placeholder="ej: dispositivo-01, camion-3, rastreador-a">
-          <p class="form-hint">Debe coincidir exactamente con el ID que transmite la aplicación del rastreador.</p>
+          <p class="form-hint">Este identificador es el que leerá la aplicación de monitoreo remoto.</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="select-accuracy-mode">Modo de Precisión GPS</label>
+          <select class="form-input" id="select-accuracy-mode">
+            <option value="high">Alta Precisión (GPS Satelital nativo - Máximo detalle)</option>
+            <option value="balanced">Equilibrado (Filtro < 30m de error)</option>
+            <option value="strict">Ultra Estricto (Filtro < 15m de error - Descartar rebotes)</option>
+            <option value="low">Ahorro de batería (Red móvil / Wi-Fi)</option>
+          </select>
+          <p class="form-hint">Controla qué tan estrictamente se evalúan los satélites antes de enviar el paquete.</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-interval">Intervalo de Transmisión (segundos)</label>
+          <input class="form-input" type="number" id="input-interval" min="1" max="60" value="2">
+          <p class="form-hint">Frecuencia con la que se comprueban y envían nuevas coordenadas a Firebase.</p>
         </div>
 
         <div class="form-group">
           <label class="form-label" for="input-maps-key">API Key de Google Maps</label>
           <input class="form-input" type="password" id="input-maps-key" placeholder="AIzaSy...">
-          <p class="form-hint">Obtenida en Google Cloud Console con la API "Maps JavaScript API" habilitada.</p>
+          <p class="form-hint">Para renderizar el mapa en pantalla. Si no dispones de una clave, se continuará transmitiendo a Firebase.</p>
         </div>
 
         <div class="form-group">
@@ -217,25 +203,22 @@
           <p class="form-hint">Tu base de datos configurada: <code>geotracker-f2c25</code></p>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="input-project-id">Project ID de Firebase</label>
-          <input class="form-input" type="text" id="input-project-id" placeholder="geotracker-f2c25">
-        </div>
-
         <div class="modal-actions">
           <button class="action-button outline" type="button" id="btn-cancel-settings">Cancelar</button>
-          <button class="action-button" type="submit">Guardar y Conectar</button>
+          <button class="action-button" type="submit">Guardar Configuración</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- SCRIPTS DE LA APLICACIÓN -->
+  <!-- SCRIPTS -->
   <script src="firebase-service.js"></script>
   <script src="map-service.js"></script>
   <script>
     (function() {
-      // Elementos de la interfaz
+      const trackingButton = document.querySelector("#tracking-button");
+      const buttonLabel = document.querySelector("#button-label");
+      const buttonIcon = document.querySelector("#button-icon");
       const statusEl = document.querySelector("#tracking-status");
       const statusMessageEl = document.querySelector("#status-message");
       const mapPlaceholder = document.querySelector("#map-placeholder");
@@ -252,15 +235,9 @@
       const subLongitude = document.querySelector("#sub-longitude");
       const subSpeed = document.querySelector("#sub-speed");
       const subAccuracy = document.querySelector("#sub-accuracy");
-      const valLastSeen = document.querySelector("#val-last-seen");
+      const valPacketCount = document.querySelector("#val-packet-count");
 
-      // Botones del mapa
-      const btnCenterMap = document.querySelector("#btn-center-map");
-      const btnToggleAutocenter = document.querySelector("#btn-toggle-autocenter");
-      const labelAutocenter = document.querySelector("#label-autocenter");
-      const btnClearRoute = document.querySelector("#btn-clear-route");
-
-      // Modal de configuración
+      // Modal
       const settingsModal = document.querySelector("#settings-modal");
       const btnOpenSettings = document.querySelector("#btn-open-settings");
       const btnCloseSettings = document.querySelector("#btn-close-settings");
@@ -268,165 +245,191 @@
       const btnSetupMapsKey = document.querySelector("#btn-setup-maps-key");
       const settingsForm = document.querySelector("#settings-form");
       const inputDeviceId = document.querySelector("#input-device-id");
+      const selectAccuracyMode = document.querySelector("#select-accuracy-mode");
+      const inputInterval = document.querySelector("#input-interval");
       const inputMapsKey = document.querySelector("#input-maps-key");
       const inputDbUrl = document.querySelector("#input-db-url");
-      const inputProjectId = document.querySelector("#input-project-id");
 
       let mapController = new GeoTrackerMap("map");
-      let lastDataTimestamp = null;
-      let heartbeatTimer = null;
       let isMapReady = false;
+      let watchId = null;
+      let intervalId = null;
+      let packetCounter = 0;
+      let isTracking = false;
 
       function setStatus(msg, state = "idle") {
         statusMessageEl.textContent = msg;
         statusEl.dataset.state = state;
       }
 
-      function updateLastSeenTimer() {
-        if (!lastDataTimestamp) {
-          valLastSeen.textContent = "Ninguno";
-          return;
-        }
-        const secondsAgo = Math.max(0, Math.floor((Date.now() - lastDataTimestamp) / 1000));
-        if (secondsAgo < 5) {
-          valLastSeen.textContent = "En vivo (ahora)";
-        } else if (secondsAgo < 60) {
-          valLastSeen.textContent = `Hace ${secondsAgo} s`;
-        } else {
-          const minutesAgo = Math.floor(secondsAgo / 60);
-          valLastSeen.textContent = `Hace ${minutesAgo} min`;
-        }
+      function updateDeviceLabel() {
+        const config = GeoTrackerConfig.getSettings();
+        tagDevice.textContent = `DISPOSITIVO: ${config.deviceId}`;
+      }
 
-        // Si han pasado más de 45 segundos sin reportar, advertir inactividad
-        if (secondsAgo > 45 && statusEl.dataset.state === "active") {
-          setStatus(`Sin transmisión reciente (${secondsAgo}s)`, "warning");
+      async function initGoogleMaps(apiKey, initialLat = 4.60971, initialLng = -74.08175) {
+        if (!apiKey) return;
+        try {
+          await GeoTrackerMap.loadScript(apiKey);
+          mapController.initMap({ lat: initialLat, lng: initialLng }, 16);
+          isMapReady = true;
+          mapPlaceholder.classList.add("hidden");
+        } catch (err) {
+          console.warn("No se pudo cargar Google Maps:", err.message);
         }
       }
 
-      function handleTelemetryUpdate(data) {
-        if (!data || !data.latitude || !data.longitude) {
-          setStatus("Esperando que el rastreador inicie transmisión...", "idle");
-          valLatitude.textContent = "--.------";
-          valLongitude.textContent = "--.------";
-          subLatitude.textContent = "Sin datos activos";
-          subLongitude.textContent = "Sin datos activos";
-          valSpeed.textContent = "0.0 km/h";
-          valAccuracy.textContent = "± -- m";
+      async function broadcastLocation(pos) {
+        const config = GeoTrackerConfig.getSettings();
+        const coords = pos.coords;
+
+        const lat = coords.latitude;
+        const lng = coords.longitude;
+        const accuracy = coords.accuracy || 0;
+        const speed = coords.speed;
+        const speedKmh = speed ? (speed * 3.6).toFixed(1) : "0.0";
+
+        // Filtrado por modo de precisión
+        const mode = config.accuracyMode || "high";
+        if (mode === "strict" && accuracy > 15) {
+          console.log(`[Filtro Estricto] Paquete descartado por precisión insuficiente (±${accuracy}m > 15m)`);
+          return;
+        }
+        if (mode === "balanced" && accuracy > 30) {
+          console.log(`[Filtro Equilibrado] Paquete descartado (±${accuracy}m > 30m)`);
           return;
         }
 
-        lastDataTimestamp = data.timestamp || Date.now();
-        const lat = Number(data.latitude);
-        const lng = Number(data.longitude);
-        const accuracy = Number(data.accuracy || 0);
-        const speedKmh = data.speed ? (Number(data.speed) * 3.6).toFixed(1) : "0.0";
-
-        // Actualizar UI de métricas
+        // Actualizar UI
         valLatitude.textContent = lat.toFixed(6);
         valLongitude.textContent = lng.toFixed(6);
         subLatitude.textContent = lat >= 0 ? "Hemisferio Norte" : "Hemisferio Sur";
         subLongitude.textContent = lng >= 0 ? "Hemisferio Este" : "Hemisferio Oeste";
         valSpeed.textContent = `${speedKmh} km/h`;
-        subSpeed.textContent = Number(speedKmh) > 1 ? "En movimiento" : "Estático";
+        subSpeed.textContent = Number(speedKmh) > 1 ? "En movimiento" : "En reposo";
         valAccuracy.textContent = `± ${Math.round(accuracy)} m`;
-        subAccuracy.textContent = accuracy < 15 ? "Excelente precisión" : "Precisión regular";
+        subAccuracy.textContent = accuracy < 15 ? "Excelente precisión satelital" : "Precisión moderada";
 
-        setStatus(`Señal en vivo · Actualizado a las ${new Date(lastDataTimestamp).toLocaleTimeString()}`, "active");
-
-        // Si Google Maps está cargado, actualizar marcador
+        // Actualizar Google Maps si está disponible
         if (isMapReady && mapController) {
           mapPlaceholder.classList.add("hidden");
-          mapController.updatePosition(lat, lng, accuracy, data.speed, lastDataTimestamp);
-        } else {
-          // Si el mapa aún no tiene API key, actualizar el placeholder con info
-          placeholderTitle.textContent = "Ubicación en tiempo real recibida";
-          placeholderCopy.textContent = `Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}. Configura tu API Key de Google Maps para ver el mapa satelital.`;
+          mapController.updatePosition(lat, lng, accuracy, speed, Date.now());
+        }
+
+        // Enviar a Firebase Realtime Database
+        try {
+          await geoTrackerFirebase.updateTrackerLocation(config.deviceId, {
+            latitude: lat,
+            longitude: lng,
+            accuracy: accuracy,
+            speed: speed,
+            heading: coords.heading,
+            altitude: coords.altitude
+          });
+          packetCounter++;
+          valPacketCount.textContent = packetCounter;
+          setStatus(`Transmitiendo en vivo · Paquete #${packetCounter} recibido por Firebase`, "active");
+        } catch (err) {
+          console.error("Error transmitiendo a Firebase:", err);
+          setStatus("Ubicación leída, error al conectar con Firebase", "warning");
         }
       }
 
-      async function initGoogleMaps(apiKey, initialLat = 4.60971, initialLng = -74.08175) {
-        if (!apiKey) {
-          console.warn("No se configuró clave de Google Maps. Mostrando marcador de posición.");
-          mapPlaceholder.classList.remove("hidden");
+      function handleLocationError(error) {
+        const messages = {
+          1: "Permiso de ubicación denegado en el navegador",
+          2: "Señal satelital GPS no disponible temporalmente",
+          3: "Tiempo de espera agotado al consultar GPS"
+        };
+        const errorMsg = messages[error.code] || "Error al obtener ubicación";
+        setStatus(errorMsg, "error");
+        if (error.code === 1) stopTracking();
+      }
+
+      function startTracking() {
+        if (!("geolocation" in navigator)) {
+          setStatus("Este navegador no soporta geolocalización", "error");
           return;
         }
 
-        try {
-          setStatus("Cargando Google Maps...", "idle");
-          await GeoTrackerMap.loadScript(apiKey);
-          mapController.initMap({ lat: initialLat, lng: initialLng }, 16);
-          isMapReady = true;
-          mapPlaceholder.classList.add("hidden");
-          setStatus("Google Maps conectado y listo", "active");
-        } catch (err) {
-          console.error("Error al cargar Google Maps:", err);
-          mapPlaceholder.classList.remove("hidden");
-          placeholderTitle.textContent = "Error al conectar con Google Maps";
-          placeholderCopy.textContent = err.message || "Verifica que la API Key sea válida y tenga permisos para Maps JavaScript API.";
-          setStatus("Error de Google Maps", "error");
-        }
-      }
-
-      function startMonitoring() {
         const config = GeoTrackerConfig.getSettings();
-        tagDevice.textContent = `DISPOSITIVO: ${config.deviceId}`;
-
-        // Intentar cargar mapa si hay clave
-        if (config.googleMapsKey) {
-          initGoogleMaps(config.googleMapsKey);
-        } else {
-          mapPlaceholder.classList.remove("hidden");
-        }
-
-        // Conectar a Firebase
         try {
-          setStatus(`Conectando con dispositivo "${config.deviceId}"...`, "idle");
           geoTrackerFirebase.init();
-          geoTrackerFirebase.subscribeToTracker(
-            config.deviceId,
-            handleTelemetryUpdate,
-            (err) => {
-              setStatus("Error al leer datos de Firebase", "error");
-              console.error(err);
-            }
-          );
-        } catch (err) {
-          setStatus("No se pudo iniciar Firebase. Revisa la configuración.", "error");
+        } catch (e) {
+          console.warn("Aviso Firebase:", e);
         }
 
-        // Heartbeat para contador de "última actualización"
-        if (heartbeatTimer) clearInterval(heartbeatTimer);
-        heartbeatTimer = setInterval(updateLastSeenTimer, 1000);
+        if (config.googleMapsKey && !isMapReady) {
+          initGoogleMaps(config.googleMapsKey);
+        }
+
+        isTracking = true;
+        trackingButton.setAttribute("aria-pressed", "true");
+        trackingButton.classList.add("danger");
+        buttonLabel.textContent = "Detener seguimiento";
+        buttonIcon.innerHTML = '<rect x="6" y="6" width="12" height="12" rx="1" fill="currentColor"/>';
+
+        placeholderTitle.textContent = "Conectando con satélites GPS...";
+        placeholderCopy.textContent = "Acepta el permiso de ubicación del navegador si aparece la solicitud.";
+        setStatus("Iniciando GPS satelital...", "active");
+
+        const isHighAcc = (config.accuracyMode || "high") !== "low";
+        const geoOptions = {
+          enableHighAccuracy: isHighAcc,
+          maximumAge: 0,
+          timeout: 10000
+        };
+
+        // Primer intento inmediato
+        navigator.geolocation.getCurrentPosition(broadcastLocation, handleLocationError, geoOptions);
+
+        // Monitoreo continuo
+        watchId = navigator.geolocation.watchPosition(broadcastLocation, handleLocationError, geoOptions);
+
+        // Sondeo periódico configurable
+        const intervalSeconds = Math.max(1, parseInt(config.intervalSeconds) || 2);
+        intervalId = setInterval(() => {
+          navigator.geolocation.getCurrentPosition(broadcastLocation, () => {}, geoOptions);
+        }, intervalSeconds * 1000);
       }
 
-      // Eventos del mapa
-      btnCenterMap.addEventListener("click", () => {
-        if (mapController && isMapReady) {
-          mapController.centerOnMarker();
+      function stopTracking() {
+        if (watchId !== null) {
+          navigator.geolocation.clearWatch(watchId);
+          watchId = null;
         }
+        if (intervalId !== null) {
+          clearInterval(intervalId);
+          intervalId = null;
+        }
+
+        isTracking = false;
+        trackingButton.setAttribute("aria-pressed", "false");
+        trackingButton.classList.remove("danger");
+        buttonLabel.textContent = "Iniciar seguimiento y transmisión";
+        buttonIcon.innerHTML = '<path d="m9 6 9 6-9 6V6Z" fill="currentColor"/>';
+
+        placeholderTitle.textContent = "Seguimiento detenido";
+        placeholderCopy.textContent = "Presiona el botón superior para reiniciar la transmisión.";
+        setStatus("El seguimiento está detenido", "idle");
+
+        const config = GeoTrackerConfig.getSettings();
+        geoTrackerFirebase.setTrackerOffline(config.deviceId);
+      }
+
+      trackingButton.addEventListener("click", () => {
+        if (isTracking) stopTracking();
+        else startTracking();
       });
 
-      btnToggleAutocenter.addEventListener("click", () => {
-        if (mapController) {
-          const auto = mapController.toggleAutoCenter();
-          btnToggleAutocenter.setAttribute("aria-pressed", auto ? "true" : "false");
-          labelAutocenter.textContent = `Auto-centrado: ${auto ? "Sí" : "No"}`;
-        }
-      });
-
-      btnClearRoute.addEventListener("click", () => {
-        if (mapController && isMapReady) {
-          mapController.clearRoute();
-        }
-      });
-
-      // Manejo de Modal
+      // Configuración Modal
       function openSettings() {
         const current = GeoTrackerConfig.getSettings();
         inputDeviceId.value = current.deviceId || "dispositivo-01";
+        selectAccuracyMode.value = current.accuracyMode || "high";
+        inputInterval.value = current.intervalSeconds || "2";
         inputMapsKey.value = current.googleMapsKey || "";
         inputDbUrl.value = current.databaseURL || "";
-        inputProjectId.value = current.projectId || "geotracker-f2c25";
         settingsModal.classList.add("open");
       }
 
@@ -443,21 +446,24 @@
         e.preventDefault();
         const updated = GeoTrackerConfig.saveSettings({
           deviceId: inputDeviceId.value.trim(),
+          accuracyMode: selectAccuracyMode.value,
+          intervalSeconds: parseInt(inputInterval.value) || 2,
           googleMapsKey: inputMapsKey.value.trim(),
-          databaseURL: inputDbUrl.value.trim(),
-          projectId: inputProjectId.value.trim()
+          databaseURL: inputDbUrl.value.trim()
         });
-
         closeSettings();
-        // Reiniciar escucha y mapa con la nueva configuración
+        updateDeviceLabel();
         if (updated.googleMapsKey && !isMapReady) {
           initGoogleMaps(updated.googleMapsKey);
         }
-        startMonitoring();
+        setStatus(`Configuración guardada para ${updated.deviceId}`, "idle");
       });
 
-      // Inicio automático
-      startMonitoring();
+      updateDeviceLabel();
+      const config = GeoTrackerConfig.getSettings();
+      if (config.googleMapsKey) {
+        initGoogleMaps(config.googleMapsKey);
+      }
     })();
   </script>
 </body>
